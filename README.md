@@ -4,6 +4,46 @@
 
 <img src="public/assets/dashboard_page.png">
 
+## Team Page
+
+<img src="public/assets/team_page.png">
+
+## Contacts Page
+
+<img src="public/assets/contact_page.png">
+
+## Invoices Page
+
+<img src="public/assets/ınvoıces_page.png">
+
+## Form Page
+
+<img src="public/assets/form_page.png">
+
+## Calendar Page
+
+<img src="public/assets/calendar_page.png">
+
+## Faq Page
+
+<img src="public/assets/faq_page.png">
+
+## Bar Chart Page
+
+<img src="public/assets/bar_page.png">
+
+## Pie Chart Page
+
+<img src="public/assets/pie_page.png">
+
+## Line Chart Page
+
+<img src="public/assets/line_page.png">
+
+## Geography Chart Page
+
+<img src="public/assets/geo_page.png">
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
