@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# React Admin Dasboard
+
+## Dashboard Page
+
+<img src="public/assets/dashboard_page.png">
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
