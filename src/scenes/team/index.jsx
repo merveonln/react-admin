@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { tokens } from "../../theme";
 import { Box, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
@@ -7,62 +7,56 @@ import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import axios from "axios";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID", width: "50" },
+    { field: "name", headerName: "name", width: "150" },
+    { field: "username", headerName: "username", width: "150" },
+    { field: "email", headerName: "email", width: "200" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "access",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
+      field: "address",
+      headerName: "address",
+      width: "400",
+      renderCell: ({ row }) => {
         return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
+          <Typography>
+            {row.address && (
+              <>
+                {row.address.street}, {row.address.suite}, {row.address.city},{" "}
+                {row.address.zipcode}
+              </>
+            )}
+          </Typography>
+        );
+      },
+    },
+    { field: "phone", headerName: "phone", width: "200" },
+    { field: "website", headerName: "website", width: "100" },
+    {
+      field: "company",
+      headerName: "company",
+      width: "500",
+      renderCell: ({ row }) => {
+        return (
+          <Typography>
+            {row.company && (
+              <>
+                {row.company.name},{row.company.catchPhrase},{row.company.bs}
+              </>
+            )}
+          </Typography>
         );
       },
     },
@@ -73,9 +67,8 @@ const Team = () => {
       <Header title="TEAM" subtitle="Managing the Team Members" />
       <Box
         m="40px 0 0 0"
-        height="75vh"
-        width="168vh"
         sx={{
+          overflowX: "auto",
           "& .MuiDataGrid-root": {
             border: "none",
           },
@@ -96,9 +89,13 @@ const Team = () => {
             borderTop: "none",
             backgroundColor: colors.blueAccent[700],
           },
+          // "& .MuiDataGrid-cell": {
+          //   minWidth: "200px !important",
+          //   minHeight: "200px !important",
+          // },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns}></DataGrid>
+        <DataGrid rows={data} columns={columns}></DataGrid>
       </Box>
     </Box>
   );
