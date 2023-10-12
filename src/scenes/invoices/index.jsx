@@ -3,45 +3,51 @@ import { tokens } from "../../theme";
 import { Box, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
-import { mockDataInvoices } from "../../data/mockData";
+// import { mockDataInvoices } from "../../data/mockData";
 import { useTheme } from "@mui/material";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Invoices = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/comments")
+      .then((res) => setData(res.data))
+
+      .catch((err) => console.log(err));
+  });
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "postId", headerName: "postId", width: "50" },
+    {
+      field: "id",
+      headerName: "id",
+      width: "50",
+    },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
+      width: "400",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      width: "250",
     },
     {
-      field: "cost",
-      headerName: "Cost",
-      flex: 1,
+      field: "body",
+      headerName: "Body",
+      width: "1800",
       renderCell: (params) => (
         <Typography color={colors.greenAccent[500]}>
-          ${params.row.cost}
+          ${params.row.body}
         </Typography>
       ),
-    },
-    {
-      field: "date",
-      headerName: "Date",
-      flex: 1,
     },
   ];
 
@@ -78,11 +84,7 @@ const Invoices = () => {
           },
         }}
       >
-        <DataGrid
-          checkboxSelection
-          rows={mockDataInvoices}
-          columns={columns}
-        ></DataGrid>
+        <DataGrid checkboxSelection rows={data} columns={columns}></DataGrid>
       </Box>
     </Box>
   );

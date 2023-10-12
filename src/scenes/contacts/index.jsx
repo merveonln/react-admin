@@ -1,55 +1,58 @@
 import React from "react";
 import { tokens } from "../../theme";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { mockDataContacts } from "../../data/mockData";
+// import { mockDataContacts } from "../../data/mockData";
 import { useTheme } from "@mui/material";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 const Contact = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos")
+      .then((res) => setData(res.data))
+
+      .catch((err) => console.log(err));
+  });
+
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
+      field: "userId",
+      headerName: "User ID",
+      headerAlign: "center",
+      align: "center",
+      width: "200",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "id",
+      headerName: "id",
+      headerAlign: "center",
+      align: "center",
+      width: "200",
+      renderCell: (params) => (
+        <Typography color={colors.greenAccent[500]}>{params.row.id}</Typography>
+      ),
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
+      field: "title",
+      headerName: "Title",
+      headerAlign: "center",
+      align: "center",
+      width: "400",
     },
     {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "ZipCode",
-      flex: 1,
+      field: "completed",
+      headerName: "Completed",
+      headerAlign: "center",
+      align: "center",
+      width: "400",
     },
   ];
 
@@ -78,7 +81,7 @@ const Contact = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[600],
+            backgroundColor: colors.primary[800],
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
@@ -90,7 +93,7 @@ const Contact = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={data}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         ></DataGrid>

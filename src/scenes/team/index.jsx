@@ -3,7 +3,7 @@ import { tokens } from "../../theme";
 import { Box, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
-import { mockDataTeam } from "../../data/mockData";
+// import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
@@ -17,18 +17,39 @@ const Team = () => {
     axios
       .get("https://jsonplaceholder.typicode.com/users")
       .then((res) => setData(res.data))
+
       .catch((err) => console.log(err));
   }, []);
 
   const columns = [
     { field: "id", headerName: "ID", width: "50" },
-    { field: "name", headerName: "name", width: "150" },
-    { field: "username", headerName: "username", width: "150" },
-    { field: "email", headerName: "email", width: "200" },
+    {
+      field: "name",
+      headerName: "Name",
+      width: "150",
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "username",
+      headerName: "User Name",
+      width: "120",
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: "180",
+      headerAlign: "center",
+      align: "center",
+    },
     {
       field: "address",
-      headerName: "address",
+      headerName: "Address",
       width: "400",
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ row }) => {
         return (
           <Typography>
@@ -42,18 +63,50 @@ const Team = () => {
         );
       },
     },
-    { field: "phone", headerName: "phone", width: "200" },
-    { field: "website", headerName: "website", width: "100" },
+    {
+      field: "phone",
+      headerName: "Phone",
+      width: "150",
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "website",
+      headerName: "Website",
+      width: "200",
+      headerAlign: "center",
+      align: "center",
+      renderCell: ({ row: { website } }) => {
+        return (
+          <Box
+            width="60%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={colors.greenAccent[600]}
+            borderRadius="4px"
+          >
+            <AdminPanelSettingsOutlinedIcon />
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {website}
+            </Typography>
+          </Box>
+        );
+      },
+    },
     {
       field: "company",
-      headerName: "company",
-      width: "500",
+      headerName: "Company",
+      width: "350",
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ row }) => {
         return (
           <Typography>
             {row.company && (
               <>
-                {row.company.name},{row.company.catchPhrase},{row.company.bs}
+                {row.company.name},{row.company.catchPhrase}
               </>
             )}
           </Typography>
@@ -83,7 +136,7 @@ const Team = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[600],
+            backgroundColor: colors.primary[800],
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
